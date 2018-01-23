@@ -1,0 +1,15 @@
+*.pyc
+*~
+__pycache__
+venv
+.idea
+db.sqlite3
+.DS_Store
+*.log
+media/banner
+media/products
+local_settings.py
+static/admin/
+static/admin_tools/
+static/css/
+static/js/
