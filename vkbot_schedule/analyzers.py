@@ -10,14 +10,14 @@ def command_analyzer(query, uid):
     command = list_query[0].lower()
     q = list_query[1:]
 
-    dict_command = {'!каждыйдень': query_analyzer_every_day(q, uid),
-                    '!каждуюнеделю': query_analyzer_every_week(q, uid),
-                    '!каждыймесяц':  query_analyzer_every_month(q, uid),
-                    '!каждыйгод': query_analyzer_every_year(q, uid),
-                    '!день': query_analyzer_day(q, uid)}
+    dict_command = {'!каждыйдень': query_analyzer_every_day,
+                    '!каждуюнеделю': query_analyzer_every_week,
+                    '!каждыймесяц': query_analyzer_every_month,
+                    '!каждыйгод': query_analyzer_every_year,
+                    '!день': query_analyzer_day}
 
     try:
-        response = dict_command[command]
+        response = dict_command[command](q, uid)
     except KeyError:
         response = 'Такой команды не существует'
     else:
