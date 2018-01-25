@@ -1,6 +1,7 @@
 import json
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from vkbot_schedule.message_handler import message_handler
 
 
 @csrf_exempt
@@ -13,6 +14,5 @@ def bot_processing(request):
     if data['type'] == 'confirmation':
         return HttpResponse(confirmation_token)
     elif data['type'] == 'message_new':
-        create_answer(data['object'], token)
-        # Сообщение о том, что обработка прошла успешно
+        message_handler(data['object'], token)
         return HttpResponse('ok')

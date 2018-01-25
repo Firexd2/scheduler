@@ -6,7 +6,7 @@ class TestQueryAnalyzeres(TestCase):
 
     def test_analyzer_every_day(self):
         query = '!каждыйдень Тест 10:00,13:00,15:00 Это-сообщение-прошу-повторить-мне 4'
-        query_analyzer_common(query, 123)
+        command_analyzer(query, 123)
 
         r = ScheduleEveryDay.objects.get(id=1)
 
@@ -27,7 +27,7 @@ class TestQueryAnalyzeres(TestCase):
 
     def test_analyzer_every_week(self):
         query = '!каждуюНеделю Тест пн,ср,пт Это-задание,-повторяем-,каждую-неделю'
-        query_analyzer_common(query, 123)
+        command_analyzer(query, 123)
 
         r = ScheduleEveryWeek.objects.get(id=1)
 
@@ -43,7 +43,7 @@ class TestQueryAnalyzeres(TestCase):
 
     def test_analyzer_every_month(self):
         query = '!Каждыймесяц Месяц 1,5,8,26 Напоминаем-о-молочке'
-        query_analyzer_common(query, 123)
+        command_analyzer(query, 123)
 
         r = ScheduleEveryMonth.objects.get(id=1)
 
@@ -54,7 +54,7 @@ class TestQueryAnalyzeres(TestCase):
 
     def test_analyzer_every_year(self):
         query = '!каждыйгод Год 24.01 Повторяем-каждый-год'
-        query_analyzer_common(query, 123)
+        command_analyzer(query, 123)
 
         r = ScheduleEveryYear.objects.get(id=1)
 
@@ -65,7 +65,7 @@ class TestQueryAnalyzeres(TestCase):
 
     def test_analyzer_day(self):
         query = '!дЕнь ДеньРождение 01.02.2018-10:30 Сегодня-день-рождение'
-        query_analyzer_common(query, 123)
+        command_analyzer(query, 123)
 
         r = ScheduleDay.objects.get(id=1)
 
