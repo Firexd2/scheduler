@@ -25,7 +25,7 @@ SECRET_KEY = '9c*c#4g=_le$(-+qpl3ay!$lx0%hyzx#4up!1zm987bauoiv6_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['vkbot_scheduler.beloglazov.me', '127.0.0.1']
 
 
 # Application definition

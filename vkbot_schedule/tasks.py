@@ -34,6 +34,17 @@ def schedule_every_week_task():
                 send_message(item.uid, item.message)
 
 
+def schedule_every_month_task():
+    """
+    Это задание будет выполняться каждый месяц по определенным дням 
+    """
+    now_day = datetime.datetime.now().day
+    for item in ScheduleEveryMonth.objects.all():
+        for day in item.days.split(','):
+            if int(day) == now_day:
+                send_message(item.uid, item.message)
+
+
 def schedule_every_year_task():
     """
     Это задание будет выполнятся каждый день для проверки и выполнения ежегодного задания

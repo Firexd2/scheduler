@@ -23,6 +23,14 @@ class ScheduleEveryWeek(models.Model):
     week_day = models.CharField(max_length=20)
 
 
+# Ежемесячные задания
+class ScheduleEveryMonth(models.Model):
+    uid = models.IntegerField()
+    name = models.CharField(max_length=100)
+    message = models.CharField(max_length=100)
+    days = models.CharField(max_length=60)
+
+
 # Ежегодные задания
 class ScheduleEveryYear(models.Model):
     uid = models.IntegerField()
