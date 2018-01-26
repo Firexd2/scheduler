@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['vkbot-scheduler.beloglazov.me', '127.0.0.1']
 
 # bot config
 
-TOKEN = ''
+TOKEN = 'c592285250c0e57ecf650ce5cc4974e2ee6a280d6dc1457226ca977dcf96066d480e48c579a5ad578b937'
 CONFIRMATION_TOKEN = '65251190'
 
 # Application definition
