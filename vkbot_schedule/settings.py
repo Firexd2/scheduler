@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['vkbot-scheduler.beloglazov.me', '127.0.0.1']
 # bot config
 
 TOKEN = ''
-CONFIRMATION_TOKEN = ''
+CONFIRMATION_TOKEN = '65251190'
 
 # Application definition
 
@@ -124,3 +124,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = '/static/'
