@@ -7,7 +7,7 @@ from vkbot_schedule.settings import CONFIRMATION_TOKEN
 
 @csrf_exempt
 def bot_processing(request):
-    data = json.loads(request.body)
+    data = json.loads(request.body.decode())
     if 'type' not in data.keys():
         return HttpResponse('not vk')
     if data['type'] == 'confirmation':
