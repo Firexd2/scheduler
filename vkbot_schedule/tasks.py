@@ -3,6 +3,7 @@ from celery.schedules import crontab
 from celery.task import periodic_task
 from vkbot_schedule.message_handler import send_message
 from vkbot_schedule.models import *
+from pytz import timezone
 
 
 @periodic_task(run_every=crontab(minute='*/2'))
@@ -60,7 +61,8 @@ def schedule_every_year_task():
 
 @periodic_task(run_every=crontab(minute='*/2'))
 def schedule_day_task():
-    now_datetime = datetime.datetime.now()
+    tz = timezone('Europe/Moscow')
+    now_datetime = datetime.datetime.now(tz)
     for item in ScheduleDay.objects.all():
         if item.day <= now_datetime:
             send_message(item.uid, item.message)
