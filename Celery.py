@@ -1,6 +1,5 @@
 import os
 from celery import Celery
-from celery.schedules import crontab
 
 from vkbot_schedule import settings
 from vkbot_schedule.settings import BROKER_URL

@@ -1,7 +1,4 @@
 from vkbot_schedule.models import *
-import datetime
-import re
-from pytz import timezone
 
 
 def command_analyzer(query, uid):
@@ -73,13 +70,9 @@ def query_analyzer_every_year(query, uid):
 
 
 def query_analyzer_day(query, uid):
-    v = list(map(int, re.split('[.\\-:]', query[1]))) # получаем [01, 02, 2018, 10, 30]
 
-    tz = timezone('Europe/Moscow') # Московкий пояс
-    date_time = datetime.datetime(v[2], v[1], v[0], v[3], v[4], tzinfo=tz) # получаем экземлпяр даты и времени
     message = (' ').join(query[2].split('-')) # сообщение наше за место пробелов дефисы
-
-    ScheduleDay(uid=uid, name=query[0], day=date_time, message=message).save()
+    ScheduleDay(uid=uid, name=query[0], time=query[1], message=message).save()
 
     return 'Теперь я напомню о твоей задаче %s.' % query[1]
 

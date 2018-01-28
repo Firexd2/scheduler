@@ -44,4 +44,4 @@ class ScheduleDay(models.Model):
     uid = models.IntegerField()
     name = models.CharField(max_length=100)
     message = models.CharField(max_length=100)
-    day = models.DateTimeField()
+    day = models.CharField(max_length=16)

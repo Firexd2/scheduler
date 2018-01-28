@@ -64,7 +64,7 @@ class TestQueryAnalyzeres(TestCase):
         self.assertEqual(r.day, '24.01')
 
     def test_analyzer_day(self):
-        query = '!дЕнь ДеньРождение 01.02.2018-10:30 Сегодня-день-рождение'
+        query = '!дЕнь ДеньРождение 01.02.2018-10:50 Сегодня-день-рождение'
         command_analyzer(query, 123)
 
         r = ScheduleDay.objects.get(id=1)
@@ -72,6 +72,5 @@ class TestQueryAnalyzeres(TestCase):
         self.assertEqual(r.uid, 123)
         self.assertEqual(r.name, 'ДеньРождение')
 
-        tz = timezone('Europe/Moscow')
-        self.assertEqual(r.day, datetime.datetime(2018, 2, 1, 10, 30, tzinfo=tz))
+        self.assertEqual(r.time, '01.02.2018-10:50')
         self.assertEqual(r.message, 'Сегодня день рождение')

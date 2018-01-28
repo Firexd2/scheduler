@@ -1,4 +1,6 @@
 import datetime
+import re
+
 from celery.schedules import crontab
 from celery.task import periodic_task
 from vkbot_schedule.message_handler import send_message
@@ -61,9 +63,11 @@ def schedule_every_year_task():
 
 @periodic_task(run_every=crontab(minute='*/2'))
 def schedule_day_task():
-    tz = timezone('Europe/Moscow')
-    now_datetime = datetime.datetime.now(tz)
+    now_datetime = datetime.datetime.now()
     for item in ScheduleDay.objects.all():
-        if item.day <= now_datetime:
+        v = list(map(int, re.split('[.\\-:]', item.day)))  # получаем [01, 02, 2018, 10, 30]
+        date_time = datetime.datetime(v[2], v[1], v[0], v[3], v[4])  # получаем экземлпяр даты и времени
+        print(now_datetime, date_time)
+        if date_time <= now_datetime:
             send_message(item.uid, item.message)
             item.delete()
