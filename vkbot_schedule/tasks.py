@@ -1,11 +1,11 @@
 import datetime
+from celery.schedules import crontab
+from celery.task import periodic_task
+from vkbot_schedule.message_handler import send_message
 from vkbot_schedule.models import *
 
 
-def send_message(uid, message):
-    return 1
-
-
+@periodic_task(run_every=crontab(minute='*/2'))
 def schedule_every_day_task():
     """
     Эта функция будет выполняться каждые пять минут для проверки задания.
@@ -22,6 +22,7 @@ def schedule_every_day_task():
                 break
 
 
+@periodic_task(run_every=crontab(minute=0, hour=9))
 def schedule_every_week_task():
     """
     Это задание будет выполнятся каждый день для проверки еженедельных команд
@@ -34,6 +35,7 @@ def schedule_every_week_task():
                 send_message(item.uid, item.message)
 
 
+@periodic_task(run_every=crontab(minute=0, hour=9))
 def schedule_every_month_task():
     """
     Это задание будет выполняться каждый месяц по определенным дням 
@@ -45,6 +47,7 @@ def schedule_every_month_task():
                 send_message(item.uid, item.message)
 
 
+@periodic_task(run_every=crontab(minute=0, hour=9))
 def schedule_every_year_task():
     """
     Это задание будет выполнятся каждый день для проверки и выполнения ежегодного задания
@@ -55,11 +58,10 @@ def schedule_every_year_task():
             send_message(item.uid, item.message)
 
 
+@periodic_task(run_every=crontab(minute='*/2'))
 def schedule_day_task():
-
     now_datetime = datetime.datetime.now()
     for item in ScheduleDay.objects.all():
         if item.day <= now_datetime:
             send_message(item.uid, item.message)
             item.delete()
-

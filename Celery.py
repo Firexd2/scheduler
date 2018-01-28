@@ -9,5 +9,5 @@ celery = Celery('tasks', broker=BROKER_URL)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vkbot_schedule.settings')
 app = Celery('vkbot_schedule')
 app.config_from_object('django.conf:settings')
-
+app.conf.timezone = 'Europe/Moscow'
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
