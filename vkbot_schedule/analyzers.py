@@ -72,7 +72,7 @@ def query_analyzer_every_year(query, uid):
 def query_analyzer_day(query, uid):
 
     message = (' ').join(query[2].split('-')) # сообщение наше за место пробелов дефисы
-    ScheduleDay(uid=uid, name=query[0], time=query[1], message=message).save()
+    ScheduleDay(uid=uid, name=query[0], day=query[1], message=message).save()
 
     return 'Теперь я напомню о твоей задаче %s.' % query[1]
 
