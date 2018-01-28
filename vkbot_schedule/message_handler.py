@@ -1,9 +1,18 @@
 import vk
+from celery.schedules import crontab
+from celery.task import periodic_task
+
+from Celery import app
 from vkbot_schedule.analyzers import command_analyzer
 from vkbot_schedule.settings import TOKEN
 
 session = vk.Session()
 api = vk.API(session, v=5.0)
+
+
+@periodic_task(run_every=crontab())
+def test():
+    api.messages.send(access_token=TOKEN, user_id=str(21509712), message='test')
 
 
 def send_message(user_id, message):
