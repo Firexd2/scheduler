@@ -1,4 +1,9 @@
+import datetime
+from datetime import timedelta
+
 from django.test import TestCase
+
+from vkbot_schedule.checks import *
 from .analyzers import *
 
 
@@ -72,5 +77,24 @@ class TestQueryAnalyzeres(TestCase):
         self.assertEqual(r.uid, 123)
         self.assertEqual(r.name, 'ДеньРождение')
 
-        self.assertEqual(r.time, '01.02.2018-10:50')
+        self.assertEqual(r.day, '01.02.2018-10:50')
         self.assertEqual(r.message, 'Сегодня день рождение')
+
+
+class TestChecks(TestCase):
+
+    def test_check_day(self):
+        datetime_now = datetime.datetime.now()
+        datetime_after = datetime_now - timedelta(minutes=3)
+        datetime_before = datetime_now + timedelta(minutes=1)
+
+        day_after = str(datetime_after.day) + '.' + str(datetime_after.month) + '.' + str(datetime_after.year) +\
+                    '-' + str(datetime_after.hour) + ':' + str(datetime_after.minute)
+
+        day_before = str(datetime_before.day) + '.' + str(datetime_before.month) + '.' + str(datetime_before.year) +\
+                     '-' + str(datetime_before.hour) + ':' + str(datetime_before.minute)
+
+        ScheduleDay(uid=1, name='Тест', day=day_after, message='ТЕСТ').save()
+        ScheduleDay(uid=1, name='Тест2', day=day_before, message='ТЕСТ2').save()
+
+        self.assertEqual(1, len([x for x in check_day()]))
