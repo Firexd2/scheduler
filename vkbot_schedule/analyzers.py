@@ -1,3 +1,4 @@
+from vkbot_schedule.action import answer_done
 from vkbot_schedule.models import *
 
 
@@ -17,8 +18,30 @@ def command_analyzer(query, uid):
         response = dict_command[command](q, uid)
     except KeyError:
         response = 'Такой команды не существует'
+    except BaseException:
+        response = 'Ошибка, повторите команду'
     else:
         response = 'Команда успешно сохранена и активирована!' + response
+    finally:
+        return response
+
+
+def actions_analyzer(uid, query):
+
+    list_query = query.split(' ') # сохраняеи запрос в виде списка через пробел
+    action = list_query[0].lower()
+    q = list_query[1:]
+
+    dict_action = {
+        '@стоп': answer_done
+    }
+
+    try:
+        response = dict_action[action](uid, q[0])
+    except KeyError:
+        response = 'Такого действия не существует'
+    except BaseException:
+        response = 'Ошибка, повторите действие'
     finally:
         return response
 
@@ -75,25 +98,3 @@ def query_analyzer_day(query, uid):
     ScheduleDay(uid=uid, name=query[0], day=query[1], message=message).save()
 
     return 'Теперь я напомню о твоей задаче %s.' % query[1]
-
-
-
-
-def answer_done(uid, name_schedule):
-    """
-    Эта функция будет обрабатывать подтвреждение выполнения задания.
-    На вход приходит uid пользователя и название задания
-    Если данные верны, то функция запишет в первом времени done в True
-    """
-    try:
-        command = ScheduleEveryDay.objects.get(uid=uid, name=name_schedule)
-    except:
-        return False
-
-    for time in command.times.all():
-        if not time.repeat_count:
-            time.repeat_count = 0
-            time.save()
-            break
-
-

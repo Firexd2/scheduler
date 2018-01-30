@@ -6,6 +6,7 @@ venv
 db.sqlite3
 .DS_Store
 *.log
+local_settings.py
 media/banner
 media/products
 local_settings.py
@@ -14,3 +15,7 @@ static/admin_tools/
 static/css/
 static/js/
 vkbot_schedule/migrations
+sch-worker.log
+sch-beat.log
+celerybeat.pid
+celerybeat-schedule

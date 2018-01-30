@@ -1,5 +1,5 @@
 import vk
-from vkbot_schedule.analyzers import command_analyzer
+from vkbot_schedule.analyzers import command_analyzer, actions_analyzer
 from vkbot_schedule.settings import TOKEN
 
 session = vk.Session()
@@ -20,6 +20,8 @@ def message_handler(data):
 
     if message[0] == '!':
         response = command_analyzer(message, uid)
+    elif message[0] == '@':
+        response = actions_analyzer(message, uid)
     else:
         response = create_response(message)
 
