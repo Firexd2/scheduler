@@ -26,7 +26,7 @@ def command_analyzer(query, uid):
         return response
 
 
-def actions_analyzer(uid, query):
+def actions_analyzer(query, uid):
 
     list_query = query.split(' ') # сохраняеи запрос в виде списка через пробел
     action = list_query[0].lower()
