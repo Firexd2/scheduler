@@ -1,3 +1,4 @@
+from datetime import *
 from vkbot_schedule.models import *
 
 
@@ -51,8 +52,8 @@ def query_analyzer_every_day(query, uid):
     message = (' ').join(query[2].split('-')) # сообщение наше за место пробелов дефисы
 
     # Сохраняем время и запоминаем экземпляры для создания связи
-    for time in times:
-        inst = TimesForEveryDay(time=time)
+    for t in times:
+        inst = TimesForEveryDay(time=t, date=datetime.now().date() - timedelta(days=1))
         inst.save()
         instance_times.append(inst)
 
@@ -61,8 +62,8 @@ def query_analyzer_every_day(query, uid):
     sed.save()
 
     # сохраняем ранее созданые экземпляры времён в наш экземлпяр задания
-    for time in instance_times:
-        sed.times.add(time)
+    for t in instance_times:
+        sed.times.add(t)
 
     return 'Теперь я буду напоминать тебе о твоей задаче ежедневно в %s!' % query[1]
 
@@ -72,7 +73,8 @@ def query_analyzer_every_week(query, uid):
     Тест пн,ср,пт 10:30 Это-задание,-повторяем-,каждую-неделю-в-10:30
     """
     message = (' ').join(query[3].split('-')) # сообщение наше за место пробелов дефисы
-    ScheduleEveryWeek(uid=uid, name=query[0], week_day=query[1], message=message, time=query[2]).save()
+    ScheduleEveryWeek(uid=uid, name=query[0], week_day=query[1], message=message,
+                      time=query[2], date=datetime.now().date() - timedelta(days=1)).save()
 
     return 'Теперь я буду напоминать тебе в %s о твоей задаче!' % query[1]
 
@@ -82,7 +84,8 @@ def query_analyzer_every_month(query, uid):
     Месяц 1,5,8,26 9:30 Напоминаем-о-молочке
     """
     message = (' ').join(query[3].split('-')) # сообщение наше за место пробелов дефисы
-    ScheduleEveryMonth(uid=uid, name=query[0], days=query[1], message=message, time=query[2]).save()
+    ScheduleEveryMonth(uid=uid, name=query[0], days=query[1], message=message,
+                       time=query[2], date=datetime.now().date() - timedelta(days=1)).save()
 
     return 'Теперь я буду напоминать тебе о твоей задаче по %s числам ежемесячно!' % query[1]
 
@@ -92,7 +95,8 @@ def query_analyzer_every_year(query, uid):
     Год 24.01 9:00 Повторяем-каждый-год
     """
     message = (' ').join(query[3].split('-')) # сообщение наше за место пробелов дефисы
-    ScheduleEveryYear(uid=uid, name=query[0], day=query[1], message=message, time=query[2]).save()
+    ScheduleEveryYear(uid=uid, name=query[0], day=query[1],
+                      message=message, time=query[2], date=datetime.now().date() - timedelta(days=1)).save()
 
     return 'Теперь я буду напоминать тебе о твоей задаче %s ежегодно!' % query[1]
 

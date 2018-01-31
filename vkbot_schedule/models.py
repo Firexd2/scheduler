@@ -1,10 +1,11 @@
+from datetime import datetime
 from django.db import models
 
 
 # Времена для ежедневных заданий
 class TimesForEveryDay(models.Model):
     time = models.CharField(max_length=5)
-    date = models.DateField(auto_now=True)
+    date = models.DateField(default=datetime.now, blank=True)
 
 
 # Ежедневные задания
@@ -22,7 +23,7 @@ class ScheduleEveryWeek(models.Model):
     message = models.CharField(max_length=100)
     week_day = models.CharField(max_length=20)
     time = models.CharField(max_length=5)
-    date = models.DateField(auto_now=True)
+    date = models.DateField(default=datetime.now, blank=True)
 
 
 # Ежемесячные задания
@@ -32,7 +33,7 @@ class ScheduleEveryMonth(models.Model):
     message = models.CharField(max_length=100)
     days = models.CharField(max_length=60)
     time = models.CharField(max_length=5)
-    date = models.DateField(auto_now=True)
+    date = models.DateField(default=datetime.now, blank=True)
 
 
 # Ежегодные задания
@@ -42,7 +43,7 @@ class ScheduleEveryYear(models.Model):
     message = models.CharField(max_length=100)
     day = models.CharField(max_length=5)
     time = models.CharField(max_length=5)
-    date = models.DateField(auto_now=True)
+    date = models.DateField(default=datetime.now, blank=True)
 
 
 # Разовые задания в определенное время

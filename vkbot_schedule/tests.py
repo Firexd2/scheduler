@@ -1,9 +1,8 @@
-from datetime import timedelta
-
 from django.test import TestCase
-
-from vkbot_schedule.checks import *
-from .analyzers import *
+from vkbot_schedule.checks import ScheduleEveryDay, ScheduleEveryWeek, ScheduleEveryMonth, ScheduleEveryYear, \
+    ScheduleDay, check_day
+from .analyzers import command_analyzer
+from datetime import *
 
 
 class TestQueryAnalyzeres(TestCase):
@@ -24,6 +23,8 @@ class TestQueryAnalyzeres(TestCase):
         self.assertEqual(all_times[0].time, '10:00')
         self.assertEqual(all_times[1].time, '13:00')
         self.assertEqual(all_times[2].time, '15:00')
+
+        self.assertEqual(all_times[0].date, datetime.now().date()-timedelta(days=1))
 
     def test_analyzer_every_week(self):
         query = '!каждуюНеделю Тест пн,ср,пт 10:30 Это-задание,-повторяем-,каждую-неделю'
@@ -82,7 +83,7 @@ class TestQueryAnalyzeres(TestCase):
 class TestChecks(TestCase):
 
     def test_check_day(self):
-        datetime_now = datetime.datetime.now()
+        datetime_now = datetime.now()
         datetime_after = datetime_now - timedelta(minutes=3)
         datetime_before = datetime_now + timedelta(minutes=1)
 
