@@ -16,7 +16,7 @@ def create_response(message):
 
 # @app.task
 # def test_msg4():
-#     api.messages.send(access_token=TOKEN, user_id=21509713, message='3,8')
+#     api.messages.send(access_token=TOKEN, user_id=10397449, message='3,8')
 
 
 def message_handler(data):

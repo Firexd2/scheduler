@@ -52,5 +52,5 @@ def check_day():
         v = list(map(int, re.split('[.\\-:]', item.day)))  # получаем [01, 02, 2018, 10, 30]
         date_time = datetime.datetime(v[2], v[1], v[0], v[3], v[4])  # получаем экземлпяр даты и времени
         if date_time <= now_datetime:
-            item.delete()
             yield (item.uid, item.message)
+            item.delete()
