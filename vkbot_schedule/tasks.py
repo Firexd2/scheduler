@@ -16,36 +16,32 @@ def schedule_every_minute():
 
 @app.task
 def subtask_every_day():
-    for item in check_every_day():
-        for uid, message in item:
-            send_message(uid, message)
+    for uid, message in check_every_day():
+        send_message(uid, message)
 
 
 @app.task
 def subtask_every_week():
-    for item in check_every_week():
-        for uid, message in item:
-            send_message(uid, message)
+    for uid, message in check_every_week():
+        send_message(uid, message)
 
 
 @app.task
 def subtask_every_month():
-    for item in check_every_month():
-        for uid, message in item:
-            send_message(uid, message)
+    for uid, message in check_every_month():
+        send_message(uid, message)
 
 
 @app.task
 def subtask_every_year():
-    for item in check_every_year():
-        for uid, message in item:
-            send_message(uid, message)
+    for uid, message in check_every_year():
+        send_message(uid, message)
 
 
 @app.task
 def subtask_day():
-    for item in check_day():
-        for uid, message in item:
-            send_message(uid, message)
+    for uid, message in check_day():
+        send_message(uid, message)
+
 
 
