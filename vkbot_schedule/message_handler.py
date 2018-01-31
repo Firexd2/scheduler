@@ -1,4 +1,5 @@
 import vk
+from Celery import app
 from vkbot_schedule.analyzers import command_analyzer, actions_analyzer
 from vkbot_schedule.settings import TOKEN
 
@@ -12,6 +13,10 @@ def send_message(user_id, message):
 
 def create_response(message):
     return 'Это не команда'
+
+# @app.task
+# def test_msg4():
+#     api.messages.send(access_token=TOKEN, user_id=21509713, message='3,8')
 
 
 def message_handler(data):
