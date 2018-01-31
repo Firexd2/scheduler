@@ -53,4 +53,4 @@ def check_day():
         date_time = datetime.datetime(v[2], v[1], v[0], v[3], v[4])  # получаем экземлпяр даты и времени
         if date_time <= now_datetime:
             yield (item.uid, item.message)
-            #item.delete()
+            item.delete()
