@@ -24,6 +24,8 @@ def command_analyzer(query, uid):
         response = dict_command[command](q, uid)
     except KeyError:
         response = 'Такой команды не существует'
+    except Exception as error_message:
+        response = error_message
     else:
         response = 'Команда успешно сохранена и активирована!' + response
     finally:
@@ -53,7 +55,7 @@ def query_analyzer_every_day(query, uid):
     """
     response_filter = filter_every_day(query)
     if response_filter:
-        return response_filter
+        raise Exception(response_filter)
 
     times = query[1].split(',') # разбиваем времена через запятую
     instance_times = [] # необходимые экземпляры для сохранения
@@ -82,7 +84,7 @@ def query_analyzer_every_week(query, uid):
     """
     response_filter = filter_every_week(query)
     if response_filter:
-        return response_filter
+        raise Exception(response_filter)
 
     message = (' ').join(query[3].split('-')) # сообщение наше за место пробелов дефисы
     ScheduleEveryWeek(uid=uid, name=query[0], week_day=query[1], message=message,
@@ -97,7 +99,7 @@ def query_analyzer_every_month(query, uid):
     """
     response_filter = filter_every_month(query)
     if response_filter:
-        return response_filter
+        raise Exception(response_filter)
 
     message = (' ').join(query[3].split('-')) # сообщение наше за место пробелов дефисы
     ScheduleEveryMonth(uid=uid, name=query[0], days=query[1], message=message,
@@ -112,7 +114,7 @@ def query_analyzer_every_year(query, uid):
     """
     response_filter = filter_every_year(query)
     if response_filter:
-        return response_filter
+        raise Exception(response_filter)
 
     message = (' ').join(query[3].split('-')) # сообщение наше за место пробелов дефисы
     ScheduleEveryYear(uid=uid, name=query[0], day=query[1],
@@ -125,7 +127,7 @@ def query_analyzer_day(query, uid):
 
     response_filter = filter_day(query)
     if response_filter:
-        return response_filter
+        raise Exception(response_filter)
 
     message = (' ').join(query[2].split('-')) # сообщение наше за место пробелов дефисы
     ScheduleDay(uid=uid, name=query[0], day=query[1], message=message).save()
