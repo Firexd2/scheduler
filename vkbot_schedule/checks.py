@@ -8,6 +8,7 @@ def check_every_day():
     for item in ScheduleEveryDay.objects.all(): # цикл обхода всех заданий в базе
         for time in item.times.all(): # проверка времени в задании
             if now_time >= time.time and time.date != now.date():
+                time.date = now.date()
                 time.save(update_fields=['date'])
                 yield (item.uid, item.message)
 
@@ -20,6 +21,7 @@ def check_every_week():
     for item in ScheduleEveryWeek.objects.all():
         for day in item.week_day.split(','):
             if days_of_week[day] == now_day and now_time >= item.time and item.date != now.date():
+                item.date = now.date()
                 item.save(update_fields=['date'])
                 yield (item.uid, item.message)
 
@@ -31,6 +33,7 @@ def check_every_month():
     for item in ScheduleEveryMonth.objects.all():
         for day in item.days.split(','):
             if int(day) == now_day and now_time >= item.time and item.date != now.date():
+                item.date = now.date()
                 item.save(update_fields=['date'])
                 yield (item.uid, item.message)
 
@@ -41,6 +44,7 @@ def check_every_year():
     now_day = now.strftime('%d.%m') # текущая дата
     for item in ScheduleEveryYear.objects.all():
         if item.day == now_day and now_time >= item.time and item.date != now.date():
+            item.date = now.date()
             item.save(update_fields=['date'])
             yield (item.uid, item.message)
 
