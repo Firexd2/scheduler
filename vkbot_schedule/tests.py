@@ -1,14 +1,14 @@
 from django.test import TestCase
 from vkbot_schedule.checks import ScheduleEveryDay, ScheduleEveryWeek, ScheduleEveryMonth, ScheduleEveryYear, \
     ScheduleDay, check_day
-from .analyzers import command_analyzer
+from .message_handler import command_analyzer
 from datetime import *
 
 
 class TestQueryAnalyzeres(TestCase):
 
     def test_analyzer_every_day(self):
-        query = '!каждыйдень Тест 10:00,13:00,15:00 Это-сообщение-прошу-повторить-мне'
+        query = '!кд Тест 10:00,13:00,15:00 Это-сообщение-прошу-повторить-мне'
         command_analyzer(query, 123)
 
         r = ScheduleEveryDay.objects.get(id=1)
@@ -56,14 +56,14 @@ class TestQueryAnalyzeres(TestCase):
         self.assertEqual(r.days, '1,5,8,26')
 
     def test_analyzer_every_year(self):
-        query = '!каждыйгод Год 24.01 9:00 Повторяем-каждый-год'
+        query = '!каждыйгод Год 24.01 09:00 Повторяем-каждый-год'
         command_analyzer(query, 123)
 
         r = ScheduleEveryYear.objects.get(id=1)
 
         self.assertEqual(r.uid, 123)
         self.assertEqual(r.name, 'Год')
-        self.assertEqual(r.time, '9:00')
+        self.assertEqual(r.time, '09:00')
         self.assertEqual(r.message, 'Повторяем каждый год')
         self.assertEqual(r.day, '24.01')
 

@@ -1,5 +1,6 @@
 import vk
-from vkbot_schedule.analyzers import command_analyzer, actions_analyzer
+from vkbot_schedule.action import actions_delete_schedule, actions_all_schedule
+from vkbot_schedule.analyzers import *
 from vkbot_schedule.settings import TOKEN
 
 session = vk.Session()
@@ -11,7 +12,11 @@ def send_message(user_id, message):
 
 
 def create_response(message):
-    return 'Это не команда'
+    message = message.lower()
+    try:
+        return ReplyMessages.objects.get(message=message).answer
+    except:
+        return 'Я тебя не понимаю. Чтобы понять друг друга, напиши "Помощь".'
 
 
 def message_handler(data):
@@ -27,3 +32,51 @@ def message_handler(data):
 
     send_message(uid, response)
 
+
+def command_analyzer(query, uid):
+
+    list_query = query.split(' ') # сохраняеи запрос в виде списка через пробел
+    command = list_query[0].lower()
+    q = list_query[1:]
+
+    dict_command = {'!каждыйдень': query_analyzer_every_day,
+                    '!кд': query_analyzer_every_day,
+                    '!каждуюнеделю': query_analyzer_every_week,
+                    '!кн': query_analyzer_every_week,
+                    '!каждыймесяц': query_analyzer_every_month,
+                    '!км': query_analyzer_every_month,
+                    '!каждыйгод': query_analyzer_every_year,
+                    '!кг': query_analyzer_every_year,
+                    '!день': query_analyzer_day,
+                    '!д': query_analyzer_day}
+    try:
+        response = dict_command[command](q, uid)
+    except KeyError:
+        response = 'Такой команды не существует'
+    except Exception as error_message:
+        response = error_message
+    else:
+        response = 'Команда успешно сохранена и активирована!\n' + response
+    finally:
+        return response
+
+
+def actions_analyzer(query, uid):
+
+    list_query = query.split(' ')
+    action = list_query[0].lower()
+    q = list_query[1:]
+
+    dict_action = {
+        '@удалить': actions_delete_schedule,
+        '@y': actions_delete_schedule,
+        '@список': actions_all_schedule,
+        '@с': actions_all_schedule,
+    }
+
+    try:
+        response = dict_action[action](q, uid)
+    except KeyError:
+        response = 'Такого действия не существует'
+    finally:
+        return response

@@ -3,52 +3,6 @@ from vkbot_schedule.filters import *
 from vkbot_schedule.models import *
 
 
-def command_analyzer(query, uid):
-
-    list_query = query.split(' ') # сохраняеи запрос в виде списка через пробел
-    command = list_query[0].lower()
-    q = list_query[1:]
-
-    dict_command = {'!каждыйдень': query_analyzer_every_day,
-                    '!кд': query_analyzer_every_day,
-                    '!каждуюнеделю': query_analyzer_every_week,
-                    '!кн': query_analyzer_every_week,
-                    '!каждыймесяц': query_analyzer_every_month,
-                    '!км': query_analyzer_every_month,
-                    '!каждыйгод': query_analyzer_every_year,
-                    '!кг': query_analyzer_every_year,
-                    '!день': query_analyzer_day,
-                    '!д': query_analyzer_day}
-
-    try:
-        response = dict_command[command](q, uid)
-    except KeyError:
-        response = 'Такой команды не существует'
-    except Exception as error_message:
-        response = error_message
-    else:
-        response = 'Команда успешно сохранена и активирована!' + response
-    finally:
-        return response
-
-
-def actions_analyzer(query, uid):
-
-    list_query = query.split(' ') # сохраняем запрос в виде списка через пробел
-    action = list_query[0].lower()
-    q = list_query[1:]
-
-    dict_action = {
-    }
-
-    try:
-        response = dict_action[action](uid, q[0])
-    except KeyError:
-        response = 'Такого действия не существует'
-    finally:
-        return response
-
-
 def query_analyzer_every_day(query, uid):
     """
     Тест 10:00,13:00,15:00 Это-сообщение-прошу-повторить-мне
@@ -90,7 +44,7 @@ def query_analyzer_every_week(query, uid):
     ScheduleEveryWeek(uid=uid, name=query[0], week_day=query[1], message=message,
                       time=query[2], date=datetime.now().date() - timedelta(days=1)).save()
 
-    return 'Теперь я буду напоминать тебе в %s о твоей задаче!' % query[1]
+    return 'Теперь я буду напоминать тебе о твоей задаче по %s в %s!' % (query[1], query[2])
 
 
 def query_analyzer_every_month(query, uid):

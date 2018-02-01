@@ -6,7 +6,7 @@ from vkbot_schedule.message_handler import send_message
 
 
 @periodic_task(run_every=crontab(minute='*/1'))
-def schedule_every_five_minute():
+def schedule_every_minute():
     subtask_every_day.delay()
     subtask_every_week.delay()
     subtask_every_month.delay()
