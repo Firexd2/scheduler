@@ -69,7 +69,7 @@ def actions_analyzer(query, uid):
 
     dict_action = {
         '@удалить': actions_delete_schedule,
-        '@y': actions_delete_schedule,
+        '@у': actions_delete_schedule,
         '@список': actions_all_schedule,
         '@с': actions_all_schedule,
     }
@@ -78,5 +78,7 @@ def actions_analyzer(query, uid):
         response = dict_action[action](q, uid)
     except KeyError:
         response = 'Такого действия не существует'
+    except Exception as error_message:
+        response = error_message
     finally:
         return response

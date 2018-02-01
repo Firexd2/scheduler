@@ -7,6 +7,8 @@ def actions_delete_schedule(query, uid):
     """
     Тест
     """
+    if len(query) == 0:
+        raise Exception('Вы не ввели название расписания для удаления. Необходимо ввести в формате @у Название.')
     name_command = query[0]
     n = 0
     for schedule in ALL_SCHEDULE:
