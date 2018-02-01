@@ -2,13 +2,15 @@ from datetime import datetime
 from django.db import models
 
 
-# Времена для ежедневных заданий
 class TimesForEveryDay(models.Model):
     time = models.CharField(max_length=5)
     date = models.DateField(default=datetime.now, blank=True)
 
+    class Meta:
+        verbose_name = 'Времена для !каждыйдень'
+        verbose_name_plural = 'Времена для !каждыйдень'
 
-# Ежедневные задания
+
 class ScheduleEveryDay(models.Model):
     uid = models.IntegerField()
     name = models.CharField(max_length=100)
@@ -22,6 +24,10 @@ class ScheduleEveryDay(models.Model):
     def __repr__(self):
         return 'Тип: !каждыйдень, название: %s, время: %s, сообщение: %s' %\
                (self.name, " ".join([time.time for time in self.times.all()]), self.message)
+
+    class Meta:
+        verbose_name = 'Расписание на !каждыйдень'
+        verbose_name_plural = 'Расписания на !каждыйдень'
 
 
 # Еженедельные задания
@@ -41,8 +47,11 @@ class ScheduleEveryWeek(models.Model):
         return 'Тип: !каждуюнеделю, название: %s, дни недели: %s, время: %s, сообщение: %s' %\
                (self.name, self.week_day, self.time, self.message)
 
+    class Meta:
+        verbose_name = 'Расписание на !каждуюнеделю'
+        verbose_name_plural = 'Расписания на !каждуюнеделю'
 
-# Ежемесячные задания
+
 class ScheduleEveryMonth(models.Model):
     uid = models.IntegerField()
     name = models.CharField(max_length=100)
@@ -59,8 +68,11 @@ class ScheduleEveryMonth(models.Model):
         return 'Тип: !каждыймесяц, название: %s, числа: %s, время: %s, сообщение: %s' %\
                (self.name, self.days, self.time, self.message)
 
+    class Meta:
+        verbose_name = 'Расписание на !каждыймесяц'
+        verbose_name_plural = 'Расписания на !каждыймесяц'
 
-# Ежегодные задания
+
 class ScheduleEveryYear(models.Model):
     uid = models.IntegerField()
     name = models.CharField(max_length=100)
@@ -77,8 +89,11 @@ class ScheduleEveryYear(models.Model):
         return 'Тип: !каждыйгод, название: %s, день и месяц: %s, время: %s, сообщение: %s' %\
                (self.name, self.day, self.time, self.message)
 
+    class Meta:
+        verbose_name = 'Расписание на !каждыйгод'
+        verbose_name_plural = 'Расписания на !каждыйгод'
 
-# Разовые задания в определенное время
+
 class ScheduleDay(models.Model):
     uid = models.IntegerField()
     name = models.CharField(max_length=100)
@@ -92,6 +107,10 @@ class ScheduleDay(models.Model):
     def __repr__(self):
         return 'Тип: !день, название: %s, дата и время: %s, сообщение: %s' %\
                (self.name, self.day, self.message)
+
+    class Meta:
+        verbose_name = 'Расписание на !день'
+        verbose_name_plural = 'Расписания на !день'
 
 
 class ReplyMessages(models.Model):
