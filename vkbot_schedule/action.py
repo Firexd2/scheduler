@@ -21,10 +21,13 @@ def actions_delete_schedule(query, uid):
 
 
 def actions_all_schedule(query, uid):
-    answer = 'Cписок твоих расписаний:\n\n\n'
+    answer = ''
 
     for schedule in ALL_SCHEDULE:
         for command in schedule.objects.filter(uid=uid):
             answer += '-%s\n\n' % str(command)
 
-    return answer
+    if answer:
+        return 'Cписок твоих расписаний:\n\n\n' + answer
+    else:
+        return 'Ты не задавал никаких расписаний'

@@ -115,7 +115,7 @@ class ScheduleDay(models.Model):
 
 class ReplyMessages(models.Model):
     message = models.CharField(max_length=600)
-    answer = models.TextField(max_length=600)
+    answer = models.TextField(max_length=4096)
 
     def __str__(self):
         return '%s' % self.message

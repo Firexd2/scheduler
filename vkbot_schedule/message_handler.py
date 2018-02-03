@@ -20,12 +20,12 @@ def create_response(message):
 
 
 def message_handler(data):
-    uid = data['user_id']  # id пользователя
-    message = data['body']  # сообщение/запрос
+    uid = data['user_id']
+    message = data['body']
 
-    if message[0] == '!':
+    if message[0] == '!' and len(message) > 1:
         response = command_analyzer(message, uid)
-    elif message[0] == '@':
+    elif message[0] == '@' and len(message) > 1:
         response = actions_analyzer(message, uid)
     else:
         response = create_response(message)
@@ -35,7 +35,7 @@ def message_handler(data):
 
 def command_analyzer(query, uid):
 
-    list_query = query.split(' ') # сохраняеи запрос в виде списка через пробел
+    list_query = query.split(' ')
     command = list_query[0].lower()
     q = list_query[1:]
 
