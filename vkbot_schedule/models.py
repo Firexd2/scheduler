@@ -123,3 +123,15 @@ class ReplyMessages(models.Model):
     class Meta:
         verbose_name = 'Ответ на сообщения'
         verbose_name_plural = 'Ответы на сообщения'
+
+
+class Wishes(models.Model):
+    uid = models.IntegerField()
+    wishes = models.TextField(max_length=4096)
+
+    def __str__(self):
+        return '%s' % self.uid
+
+    class Meta:
+        verbose_name = 'Пожелание'
+        verbose_name_plural = 'Пожелания'

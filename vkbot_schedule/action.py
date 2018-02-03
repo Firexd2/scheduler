@@ -31,3 +31,8 @@ def actions_all_schedule(query, uid):
         return 'Cписок твоих расписаний:\n\n\n' + answer
     else:
         return 'Ты не задавал никаких расписаний'
+
+
+def actions_wishes(query, uid):
+    Wishes(uid=uid, wishes=' '.join(query)).save()
+    return 'Спасибо за пожелание! Создатель обязательно его прочтет.'

@@ -1,5 +1,5 @@
 import vk
-from vkbot_schedule.action import actions_delete_schedule, actions_all_schedule
+from vkbot_schedule.action import actions_delete_schedule, actions_all_schedule, actions_wishes
 from vkbot_schedule.analyzers import *
 from vkbot_schedule.settings import TOKEN
 
@@ -72,6 +72,8 @@ def actions_analyzer(query, uid):
         '@у': actions_delete_schedule,
         '@список': actions_all_schedule,
         '@с': actions_all_schedule,
+        '@пожелания': actions_wishes,
+        '@п': actions_wishes,
     }
 
     try:
