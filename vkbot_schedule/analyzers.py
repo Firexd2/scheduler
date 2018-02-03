@@ -84,10 +84,10 @@ def query_analyzer_day(query, uid):
     if response_filter:
         raise Exception(response_filter)
 
-    if query[1][:7] == 'Сегодня':
-        query[1] = datetime.now().date().strftime('%d.%m.%Y') + query[7:]
-    if query[1][:6] == 'Завтра':
-        query[1] = (datetime.now() + timedelta(days=1)).date().strftime('%d.%m.%Y') + query[6:]
+    if query[1][:7].lower() == 'сегодня':
+        query[1] = datetime.now().date().strftime('%d.%m.%Y') + query[1][7:]
+    if query[1][:6].lower() == 'завтра':
+        query[1] = (datetime.now() + timedelta(days=1)).date().strftime('%d.%m.%Y') + query[1][6:]
 
     message = ' '.join(query[2].split('-'))
     ScheduleDay(uid=uid, name=query[0], day=query[1], message=message).save()
