@@ -8,6 +8,93 @@
 
 В качестве обертки используется фреймворк Django. Для планировщика задач была выбрана связка Celery + Redis
 
+### Применение
+
+Вы можете воспользоваться уже готовым ботом, по адресу https://vk.com/public160895017
+
+Если хотите установить его на свой сервер и в своё сообщество, воспользуйтесь инструкцией ниже.
+
+### Установка
+
+Чтобы успешно запустить бота, потребуется немного усилий.
+
+Клонируем репозиторий в корневую папку:
+
+```bash
+$ git clone https://github.com/Firexd2/scheduler.git
+```
+
+Убедитесь, что активировали нужное вам виртуальное окружение, и начинайте установку зависимостей:
+
+```bash
+$ pip install -r requirements.txt
+```
+
+Необходимо сконфигурировать данные для вашей базы данных. В проекте используется PostgreSQL:
+
+```python
+# in settings.py
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'NameBase',
+        'USER': 'User',
+        'PASSWORD': 'Password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+```
+
+Создаем и применяем миграции. В корневой папке проекта введите:
+
+```bash
+python manage.py makemigrations && python manage.py migrate
+```
+
+Описывать настройки Nginx и Wsgi не буду, так как здесь каждый для себя сам решает, какие технологии ему использовать.
+В Интернете много информации.
+
+После развертывания необходимо запустить в фоновом режиме ``Celery`` и ``Celery beat``.
+Устанавливаем supervisor, и создаем конфигурационный файл cо следующим содержимым:
+
+```bash
+[program:scheduler-celery]
+user=YOURuser
+command = /home/YOURuser/YOUREnv/scheduler/bin/celery worker -A Celery --loglevel=debug --concurrency=4
+directory = /home/YOURuser/scheduler
+autorestart = true
+autostart = true
+stderr_logfile = /var/log/scheduler-worker.err.log
+
+[program:scheduler-beat]
+user=YOURuser
+command = /home/YOURuser/YOUREnv/scheduler/bin/celery -A Celery beat
+directory = /home/YOURuser/scheduler
+autorestart = true
+autostart = true
+stderr_logfile = /var/log/scheduler-beat.err.log
+```
+
+Не забудьте указать правильный путь к вашему виртуальному окружению.
+
+Обновляем supervisor и запускаем его, если он еще не запущен:
+
+```bash
+sudo supervisorctl update && sudo supervisorctl reread && sudo service supervisor start
+```
+
+Теперь необходимо создать сообщество на https://vk.com, чтобы получить токен и успешно взаимодействовать с пользователями.
+После создания сообщества, перейдите на *управление сообществом*, далее *работа с API*. Нажмите на вкладку *Callback API*
+
+![vk.com](https://github.com/Firexd2/scheduler/blob/master/publicVK.png)
+
+Введите ваш адрес и нажмите на кнопку подтвердить! Если вы ранее сделали всё верно, адрес успешно подтвердится.
+
+Начните диалог с вашим сообществом. Используйте команды, указанные ниже
+
+
 ### Примеры команд
 
 ```bash
@@ -55,6 +142,6 @@
 
 В случае ошибки бот подскажет, как исправить команду.
 
-По-мимо команд, есть еще два действия над командами:
+По-мимо команд, есть еще два действия:
 - Список всех расписаний: ``@с``
 - Удалить расписания: ``@у НазваниеРасписания``
