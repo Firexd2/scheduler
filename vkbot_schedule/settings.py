@@ -25,12 +25,12 @@ SECRET_KEY = '9c*c#4g=_le$(-+qpl3ay!$lx0%hyzx#4up!1zm987bauoiv6_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['vkbot-scheduler.beloglazov.me', '127.0.0.1']
+ALLOWED_HOSTS = ['scheduler.beloglazov.me', '127.0.0.1']
 
 # bot config
 
-TOKEN = 'c592285250c0e57ecf650ce5cc4974e2ee6a280d6dc1457226ca977dcf96066d480e48c579a5ad578b937'
-CONFIRMATION_TOKEN = '65251190'
+TOKEN = ''
+CONFIRMATION_TOKEN = ''
 
 # Application definition
 
@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'vkbot_schedule.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bot_schedule',
-        'USER': 'bot',
-        'PASSWORD': 'botadm',
+        'NAME': '-',
+        'USER': '-',
+        'PASSWORD': '-',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -137,6 +137,6 @@ BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 
 try:
-    from .local_settings import *
-except:
+    from .dev_settings import *
+except ImportError:
     pass

@@ -1,8 +1,10 @@
+from datetime import *
+
 from django.test import TestCase
+
 from vkbot_schedule.checks import ScheduleEveryDay, ScheduleEveryWeek, ScheduleEveryMonth, ScheduleEveryYear, \
     ScheduleDay, check_day
 from .message_handler import command_analyzer
-from datetime import *
 
 
 class TestQueryAnalyzeres(TestCase):
@@ -87,11 +89,11 @@ class TestChecks(TestCase):
         datetime_after = datetime_now - timedelta(minutes=3)
         datetime_before = datetime_now + timedelta(minutes=1)
 
-        day_after = str(datetime_after.day) + '.' + str(datetime_after.month) + '.' + str(datetime_after.year) +\
-                    '-' + str(datetime_after.hour) + ':' + str(datetime_after.minute)
+        day_after = str(datetime_after.day) + '.' + str(datetime_after.month) + '.' + \
+                    str(datetime_after.year) + '-' + str(datetime_after.hour) + ':' + str(datetime_after.minute)
 
-        day_before = str(datetime_before.day) + '.' + str(datetime_before.month) + '.' + str(datetime_before.year) +\
-                     '-' + str(datetime_before.hour) + ':' + str(datetime_before.minute)
+        day_before = str(datetime_before.day) + '.' + str(datetime_before.month) + '.' +\
+                     str(datetime_before.year) + '-' + str(datetime_before.hour) + ':' + str(datetime_before.minute)
 
         ScheduleDay(uid=1, name='Тест', day=day_after, message='ТЕСТ').save()
         ScheduleDay(uid=1, name='Тест2', day=day_before, message='ТЕСТ2').save()

@@ -1,4 +1,5 @@
 import vk
+
 from vkbot_schedule.action import actions_delete_schedule, actions_all_schedule, actions_wishes
 from vkbot_schedule.analyzers import *
 from vkbot_schedule.settings import TOKEN

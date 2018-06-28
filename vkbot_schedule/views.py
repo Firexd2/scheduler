@@ -1,6 +1,8 @@
 import json
+
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+
 from vkbot_schedule.message_handler import message_handler
 from vkbot_schedule.settings import CONFIRMATION_TOKEN
 
