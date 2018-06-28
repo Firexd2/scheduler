@@ -12,3 +12,4 @@ sch-beat.log
 celerybeat.pid
 celerybeat-schedule
 migrations
+static
